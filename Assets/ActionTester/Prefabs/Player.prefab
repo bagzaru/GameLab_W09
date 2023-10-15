@@ -4945,6 +4945,8 @@ GameObject:
   - component: {fileID: 8146033685163141044}
   - component: {fileID: 8146033685163141035}
   - component: {fileID: 2418607111820599639}
+  - component: {fileID: 4142257659941380}
+  - component: {fileID: 4142257659941381}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5008,7 +5010,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!136 &8146033685163141032
 CapsuleCollider:
@@ -5018,7 +5020,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8145101155639669062}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.19775224
   m_Height: 1.8213938
@@ -5036,14 +5038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29b10d9a9e76414993e30503ca7bfdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  canMove: 1
-  isDashing: 0
-  canDash: 1
-  dashTime: 0.2
-  dashDistance: 6
-  isDashCoolTime: 0
-  dashCoolTime: 0.8
 --- !u!114 &8146033685163141035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5147,8 +5141,8 @@ MonoBehaviour:
     m_ActionName: Player/Dash[/XInputControllerWindows/buttonSouth,/Keyboard/space,/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2418607111820599639}
-        m_TargetAssemblyTypeName: PlayerAttacker, Assembly-CSharp
+      - m_Target: {fileID: 8146033685163141044}
+        m_TargetAssemblyTypeName: PlayerMover, Assembly-CSharp
         m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
@@ -5178,11 +5172,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45a639d7e3db154c97cdbacfcae6d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveAmount: 4
+  moveTime: 0.2
   maxAttackCount: 3
   slashEffects:
   - {fileID: 8146033685396335025}
   - {fileID: 8156167926903011116}
   - {fileID: 880852679320894156}
+--- !u!114 &4142257659941380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145101155639669062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd7daea7dff81b4ebfc87b9be198ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 0}
+  lastDirection: {x: 0, y: 0, z: 1}
+  speed: 8
+  onMove:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4142257659941381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145101155639669062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b985859f8234943a3d68ed86933d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashTime: 0.2
+  dashDistance: 10
+  isDashDelayed: 0
+  dashDelay: 0.8
+  onDashStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onDashEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8145121611689962012
 GameObject:
   m_ObjectHideFlags: 0
