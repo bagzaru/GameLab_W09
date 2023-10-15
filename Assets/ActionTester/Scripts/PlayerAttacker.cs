@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class PlayerAttacker : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private int lastAttackCount = 0;
     //공격 모션 지속 시간
-    private float[] attackDurations = {0.8f, 0.8f, 1.7f};
+    private float[] attackDurations = {0.4f, 0.4f, 0.8f};
     private float currentDuration = 0f;
 
     //공격 후 딜레이
@@ -22,9 +23,16 @@ public class PlayerAttacker : MonoBehaviour
     public bool isAttacking { get; private set; } = false;
     private bool attackKeyPressedWhileAttakcing = false;
 
+    public List<GameObject> slashEffects;
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
+
+        foreach (var t in slashEffects)
+        {
+            t.SetActive(false);
+        }
     }
 
     private void Update()
@@ -72,22 +80,14 @@ public class PlayerAttacker : MonoBehaviour
         }
 
         //Debug.Log("렛츠어택!");
+        //지속 시간 초기화
         currentDuration = attackDurations[lastAttackCount];
+        //공격 중이라는 것을 true로 변경
         isAttacking = true;
+        //공격 애니메이션 재생
         _animator.SetBool($"Attack{lastAttackCount}", true);
-        Debug.Log($"Attack{lastAttackCount}");
-
-        //_animator.SetBool($"Attack{lastAttackCount}", false);
-        // if (lastAttackCount >= 2)
-        // {
-        // 	lastAttackCount = 0; 
-        // }
-        // else
-        // {
-        // 	lastAttackCount += 1;
-        // }
-
-        //_animator.SetBool($"Attack{lastAttackCount}", true);
+        //공격 이펙트 킨다.
+        slashEffects[lastAttackCount].SetActive(true);
     }
 
     public void OnAttackEnded()
@@ -105,9 +105,10 @@ public class PlayerAttacker : MonoBehaviour
         else
         {
             //더이상 공격이 없다면, 애니메이션을 초기화하고, 딜레이를 설정한다.
-            for (int i = 0; i <= lastAttackCount; i++)
+            for (int i = 0; i < maxAttackCount; i++)
             {
                 _animator.SetBool($"Attack{i}", false);
+                slashEffects[i].SetActive(false);
             }
             lastAttackCount = 0;
             currentDelay = attackDelay;
