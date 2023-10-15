@@ -997,7 +997,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRadius: 16
   rushRadius: 5
-  rushDistance: 8
+  rushCastingTime: 0.4
+  stunTime: 1
+  rushDelay: 2
+--- !u!114 &1292541114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292541108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b985859f8234943a3d68ed86933d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashTime: 0.5
+  dashDistance: 13
+  isDashDelayed: 0
+  dashDelay: 0
+  onDashStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onDashEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1309681736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1397,6 +1421,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4142257659941381, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
+      propertyPath: dashDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142257659941381, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
+      propertyPath: dashDistance
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8143125119161658214, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
       propertyPath: m_RootOrder
       value: 15
