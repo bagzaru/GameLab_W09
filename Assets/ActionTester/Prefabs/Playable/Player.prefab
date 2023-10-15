@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1911021318}
+  - component: {fileID: 1612912699}
   m_Layer: 0
   m_Name: vfx_Slash_tut
   m_TagString: Untagged
@@ -34,6 +35,22 @@ Transform:
   m_Father: {fileID: 8143125119161658214}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1612912699
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911021317}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &8144762325895981720
 GameObject:
   m_ObjectHideFlags: 0
@@ -4947,9 +4964,10 @@ GameObject:
   - component: {fileID: 2418607111820599639}
   - component: {fileID: 4142257659941380}
   - component: {fileID: 4142257659941381}
-  m_Layer: 0
+  - component: {fileID: 4142257659941382}
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5010,7 +5028,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &8146033685163141032
 CapsuleCollider:
@@ -5020,7 +5038,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8145101155639669062}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.19775224
   m_Height: 1.8213938
@@ -5172,6 +5190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45a639d7e3db154c97cdbacfcae6d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  damage: 1
   moveAmount: 4
   moveTime: 0.2
   maxAttackCount: 3
@@ -5213,13 +5235,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashTime: 0.2
-  dashDistance: 10
+  dashDistance: 8
   isDashDelayed: 0
-  dashDelay: 0.8
+  dashDelay: 0.5
   onDashStart:
     m_PersistentCalls:
       m_Calls: []
   onDashEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4142257659941382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145101155639669062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81a8d13e7d24234b88e6e93f2573507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 5
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onKilled:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8145121611689962012

@@ -13,10 +13,11 @@ public class RushEnemyStateMachine : MonoBehaviour
     public float stunTime = 1f;
     public float rushDelay = 2f;
 
-    private bool _isRushDelaying = false;
+    //private bool _isRushDelaying = false;
 
     private Mover _mover;
     private Dasher _dasher;
+    private Animator _animator;
 
     enum State
     {
@@ -35,6 +36,7 @@ public class RushEnemyStateMachine : MonoBehaviour
     {
         _mover = GetComponent<Mover>();
         _dasher = GetComponent<Dasher>();
+        _animator = GetComponent<Animator>();
         SetState(State.IDLE);
     }
 
@@ -58,11 +60,11 @@ public class RushEnemyStateMachine : MonoBehaviour
 
     void SetState(State next)
     {
-        //애니메이터의 기존 변수 false
         //state 변경
         state = next;
         //애니메이터의 새로운 변수 true
-
+        _animator.SetTrigger(state.ToString());
+        //Debug.Log($"State: {state.ToString()}");
         //Rush는 코루틴으로 진행되므로 Coroutine 실행
         if (next == State.RUSH)StartCoroutine(RushCoroutine());
         
@@ -100,7 +102,7 @@ public class RushEnemyStateMachine : MonoBehaviour
         //플레이어 탐색
         //플레이어가 돌진 사거리 안에 들어오면 돌진으로 넘어간다.
         GameObject rushTo = FindPlayerInRadius(rushRadius);
-        if (rushTo != null && !_isRushDelaying)
+        if (rushTo != null && !_dasher.isCooldown)
         {
             //돌진 가능
             _mover.StopMove();
@@ -126,14 +128,12 @@ public class RushEnemyStateMachine : MonoBehaviour
 
     IEnumerator RushCoroutine()
     {
-        _isRushDelaying = true;
+        //_isRushDelaying = true;
         //대쉬 준비 애니메이션(있을 경우)
 
-        yield return new WaitForSeconds(rushCastingTime);
+        //yield return new WaitForSeconds(rushCastingTime);
         //대쉬
-        Vector3 v = target.transform.position - transform.position;
-        v.y = 0f;
-        _dasher.Dash(v.normalized);
+        _dasher.Dash(_mover.lastDirection);
         while (_dasher.IsDashing)
         {
             yield return null;
@@ -141,11 +141,11 @@ public class RushEnemyStateMachine : MonoBehaviour
         
         //대쉬 종료, STUN 애니메이션(있을 경우)
         
-        yield return new WaitForSeconds(stunTime);
+        //yield return new WaitForSeconds(stunTime);
         //STUN까지 끝남, IDLE로 상태 전환
         SetState(State.IDLE);
-        yield return new WaitForSeconds(rushDelay);
-        _isRushDelaying = false;
+       // yield return new WaitForSeconds(rushDelay);
+        //_isRushDelaying = false;
     }
 
 }

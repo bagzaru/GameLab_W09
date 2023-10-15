@@ -14,12 +14,16 @@ public class Dasher : MonoBehaviour
 	public float dashTime = 0.2f;
 	public float dashDistance = 10f;
 	private Vector3 direction;
+
+	[Header("선딜레이")]
+	public float dashCastingTime = 0.5f;
+	[Header("후딜레이")]
+	public float dashStunTime = 0.5f;
 	
-	
-	[Header("대쉬 딜레이")]
-	public bool isDashDelayed = false;
-	public float dashDelay = 0.8f;
-	private float dashDelayTimer = 0f;
+	[FormerlySerializedAs("isDashDelayed")] [Header("대쉬 딜레이")]
+	public bool isCooldown = false;
+	[FormerlySerializedAs("dashDelay")] public float dashCooldown = 0.8f;
+	private float _coolDownCounter = 0f;
 
 	public UnityEvent onDashStart;
 	public UnityEvent onDashEnd;
@@ -35,20 +39,20 @@ public class Dasher : MonoBehaviour
 	private void Update()
 	{
 		//대쉬 쿨타임 계산
-		if (isDashDelayed)
+		if (isCooldown)
 		{
-			dashDelayTimer += Time.deltaTime;
-			if (dashDelayTimer >= dashDelay)
+			_coolDownCounter += Time.deltaTime;
+			if (_coolDownCounter >= dashCooldown)
 			{
-				isDashDelayed = false;
-				dashDelayTimer = 0f;
+				isCooldown = false;
+				_coolDownCounter = 0f;
 			}
 		}
 	}
 
 	public void Dash(Vector3 dir)
 	{
-		if (isDashDelayed||!CanDash||IsDashing)
+		if (isCooldown||!CanDash||IsDashing)
 		{
 			return;
 		}
@@ -60,19 +64,22 @@ public class Dasher : MonoBehaviour
 
 	private IEnumerator DashCoroutine()
 	{
+		//대쉬 시전 딜레이
+		yield return new WaitForSeconds(dashCastingTime);
+		
+		//실제 대쉬 실행
 		float counter = 0f;
 		float dashSpeed = dashDistance/dashTime;		//시간과 대시 거리를 설정하면 자동 반영
-		
+		float nextDashAmount = 0f;
 		while (counter <= dashDistance)
 		{
-			float nextDashAmount = dashSpeed*Time.fixedDeltaTime;
+			nextDashAmount = dashSpeed*Time.fixedDeltaTime;
 			if (nextDashAmount + counter >= dashDistance)
 			{
 				//이번 프레임 움직일 거리보다 남은 거리가 작으면 마지막 움직임
 				nextDashAmount = dashDistance - counter;
 				_body.MovePosition(_body.position + direction*nextDashAmount);
-				onDashEnd.Invoke();
-				yield break;
+				break;
 			}
 			else
 			{
@@ -81,12 +88,15 @@ public class Dasher : MonoBehaviour
 			counter += nextDashAmount;
 			yield return new WaitForFixedUpdate();
 		}
+		//대쉬 종료
+		yield return new WaitForSeconds(dashStunTime);
+		onDashEnd.Invoke();	
 	}
 	
 	private void OnDashEnd()
 	{
 		IsDashing = false;
-		isDashDelayed = true;
+		isCooldown = true;
 	}
 	
 }

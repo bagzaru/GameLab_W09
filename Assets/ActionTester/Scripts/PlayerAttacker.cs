@@ -8,6 +8,9 @@ using UnityEngine.VFX;
 
 public class PlayerAttacker : MonoBehaviour
 {
+    public LayerMask damageLayer;
+    public float damage = 1f;
+    
     private Animator _animator;
     Rigidbody body;
     private Mover _mover;
@@ -61,6 +64,28 @@ public class PlayerAttacker : MonoBehaviour
             if (_currentDelay <= 0f)
             {
                 _currentDelay = 0f;
+            }
+        }
+    }
+
+    private List<GameObject> damagedList = new List<GameObject>();
+    private void FixedUpdate()
+    {
+        if (IsAttacking)
+        {
+            //공격 대상 체킹
+            Collider[] cols = Physics.OverlapSphere(transform.position + Vector3.forward, 1.3f);
+            for(int i=0;i<cols.Length;i++)
+            {
+                GameObject target = cols[i].gameObject;
+                if (((1 << target.layer) & damageLayer)>0
+                    &&!damagedList.Contains(target))
+                {
+                    damagedList.Add(target);
+                    Damageable d = target.GetComponent<Damageable>();
+                    d.Hit(damage);
+                    //Debug.Log($"{target.name}");
+                }    
             }
         }
     }
@@ -119,6 +144,7 @@ public class PlayerAttacker : MonoBehaviour
     public void OnAttackEnded()
     {
         IsAttacking = false;
+        damagedList.Clear();
 
         _lastAttackCount += 1;
         if (_attackKeyPressedWhileAttacking
