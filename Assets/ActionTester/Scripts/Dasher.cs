@@ -66,8 +66,6 @@ public class Dasher : MonoBehaviour
 		while (counter <= dashDistance)
 		{
 			float nextDashAmount = dashSpeed*Time.fixedDeltaTime;
-			Debug.Log($"{nextDashAmount}, {dashSpeed} * {Time.fixedDeltaTime}");
-			Debug.Log($"if: {nextDashAmount} + {counter} >= {dashDistance}");
 			if (nextDashAmount + counter >= dashDistance)
 			{
 				//이번 프레임 움직일 거리보다 남은 거리가 작으면 마지막 움직임

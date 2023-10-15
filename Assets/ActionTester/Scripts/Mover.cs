@@ -17,8 +17,8 @@ public class Mover : MonoBehaviour
     public float speed = 8f;
     
     //이벤트
-    public UnityEvent onMove;
-    public UnityEvent onMoveEnd;
+    [HideInInspector]public UnityEvent onMove;
+    [HideInInspector]public UnityEvent onMoveEnd;
 
     //private Components
     protected Rigidbody _body;
