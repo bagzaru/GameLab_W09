@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour
         _mover = GetComponent<Mover>();
         
         
-        _dasher.onDashStart.AddListener(() => {animator.SetBool("Dash", true); });
-        _dasher.onDashEnd.AddListener(() => {animator.SetBool("Dash", false); });
+        _dasher.onCasting.AddListener(() => {animator.SetBool("Dash", true); });
+        _dasher.onFinish.AddListener(() => {animator.SetBool("Dash", false); });
         _mover.onMove.AddListener(()=>{ animator.SetBool(animMoveCode,true);});
         _mover.onMoveEnd.AddListener(()=>{ animator.SetBool(animMoveCode,false);});
     }
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (_mover == null) return;
         if (_dasher.IsDashing || _attacker.IsAttacking)
         {
             //대쉬 중이거나 공격 중이면 움직임 금지
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if(_dasher == null) return;
         if (context.performed)
         {
             _dasher.Dash(_mover.lastDirection);
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (_attacker == null) return;
         if (context.started)
         {
             _attacker.Attack(_mover.lastDirection);

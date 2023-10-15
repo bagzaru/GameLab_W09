@@ -25,15 +25,18 @@ public class Dasher : MonoBehaviour
 	[FormerlySerializedAs("dashDelay")] public float dashCooldown = 0.8f;
 	private float _coolDownCounter = 0f;
 
-	public UnityEvent onDashStart;
-	public UnityEvent onDashEnd;
+	[HideInInspector]public UnityEvent onCasting;
+	[HideInInspector]public UnityEvent onDash;
+	[HideInInspector] public UnityEvent onFixedUpdateDash;
+	[HideInInspector]public UnityEvent onStun;
+	[HideInInspector]public UnityEvent onFinish;
 
 	private Rigidbody _body;
 
 	protected void Start()
 	{
 		_body = GetComponent<Rigidbody>();
-		onDashEnd.AddListener(OnDashEnd);
+		onFinish.AddListener(OnDashEnd);
 	}
 	
 	private void Update()
@@ -58,19 +61,20 @@ public class Dasher : MonoBehaviour
 		}
 		IsDashing = true;
 		direction = dir.normalized;
-		onDashStart.Invoke();
 		StartCoroutine(DashCoroutine());
 	}
 
 	private IEnumerator DashCoroutine()
 	{
 		//대쉬 시전 딜레이
+		onCasting.Invoke();
 		yield return new WaitForSeconds(dashCastingTime);
 		
 		//실제 대쉬 실행
 		float counter = 0f;
 		float dashSpeed = dashDistance/dashTime;		//시간과 대시 거리를 설정하면 자동 반영
 		float nextDashAmount = 0f;
+		onDash.Invoke();
 		while (counter <= dashDistance)
 		{
 			nextDashAmount = dashSpeed*Time.fixedDeltaTime;
@@ -86,11 +90,13 @@ public class Dasher : MonoBehaviour
 				_body.MovePosition(_body.position + direction*nextDashAmount);
 			}
 			counter += nextDashAmount;
+			onFixedUpdateDash.Invoke();
 			yield return new WaitForFixedUpdate();
 		}
 		//대쉬 종료
+		onStun.Invoke();
 		yield return new WaitForSeconds(dashStunTime);
-		onDashEnd.Invoke();	
+		onFinish.Invoke();	
 	}
 	
 	private void OnDashEnd()

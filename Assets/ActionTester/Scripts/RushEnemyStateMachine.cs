@@ -6,14 +6,9 @@ using UnityEngine;
 
 public class RushEnemyStateMachine : MonoBehaviour
 {
+    [Header("공격을 시전할 사거리")]
     public float moveRadius = 16f;
     public float rushRadius = 5f;
-
-    public float rushCastingTime = 0.4f;
-    public float stunTime = 1f;
-    public float rushDelay = 2f;
-
-    //private bool _isRushDelaying = false;
 
     private Mover _mover;
     private Dasher _dasher;
@@ -128,24 +123,16 @@ public class RushEnemyStateMachine : MonoBehaviour
 
     IEnumerator RushCoroutine()
     {
-        //_isRushDelaying = true;
-        //대쉬 준비 애니메이션(있을 경우)
-
-        //yield return new WaitForSeconds(rushCastingTime);
-        //대쉬
+        //대쉬 준비, 대쉬, 스턴 현재 하나로 묶여있음
+        //만약 필요하다면 Dasher에 Event를 제작할것.
+        
         _dasher.Dash(_mover.lastDirection);
         while (_dasher.IsDashing)
         {
             yield return null;
         }
-        
-        //대쉬 종료, STUN 애니메이션(있을 경우)
-        
-        //yield return new WaitForSeconds(stunTime);
         //STUN까지 끝남, IDLE로 상태 전환
         SetState(State.IDLE);
-       // yield return new WaitForSeconds(rushDelay);
-        //_isRushDelaying = false;
     }
 
 }

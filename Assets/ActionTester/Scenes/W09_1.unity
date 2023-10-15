@@ -1175,7 +1175,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4142257659941373}
-  - {fileID: 1980966220}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1338,77 +1337,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1980966219
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1607811885}
-    m_Modifications:
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8871611660395572701, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_Name
-      value: PlayableRushGolem
-      objectReference: {fileID: 0}
-    - target: {fileID: 8871611660395572701, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
---- !u!4 &1980966220 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8868196633576346687, guid: dadcbfef0be514a4982fe93c27ff6570, type: 3}
-  m_PrefabInstance: {fileID: 1980966219}
+--- !u!1 &1067925665809071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8871611660395572701, guid: 47cc69d4b10511747830faab3bbc9b7b, type: 3}
+  m_PrefabInstance: {fileID: 8871388166668578674}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4142257659941373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8143125119161658214, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
   m_PrefabInstance: {fileID: 8146033686116268699}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &95380085257336200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067925665809071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9f377b32bfb254882bec12d8869707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  damage: 1
 --- !u!1001 &8146033686116268699
 PrefabInstance:
   m_ObjectHideFlags: 0
