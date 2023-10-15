@@ -8,6 +8,8 @@ using UnityEngine.VFX;
 public class PlayerAttacker : MonoBehaviour
 {
     private Animator _animator;
+    Rigidbody body;
+    private PlayerMover _mover;
 
     private int lastAttackCount = 0;
     //공격 모션 지속 시간
@@ -17,6 +19,10 @@ public class PlayerAttacker : MonoBehaviour
     //공격 후 딜레이
     private float attackDelay = 1.5f;
     private float currentDelay = 0f;
+    
+    //이동 거리
+    public float moveAmount = 4f;
+    public float moveTime = 0.2f;
 
     public int maxAttackCount = 3;
 
@@ -28,6 +34,8 @@ public class PlayerAttacker : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        body = GetComponent<Rigidbody>();
+        _mover = GetComponent<PlayerMover>();
 
         foreach (var t in slashEffects)
         {
@@ -88,6 +96,32 @@ public class PlayerAttacker : MonoBehaviour
         _animator.SetBool($"Attack{lastAttackCount}", true);
         //공격 이펙트 킨다.
         slashEffects[lastAttackCount].SetActive(true);
+        //앞으로 약간 대쉬
+        StartCoroutine(DashCoroutine(_mover.input, moveAmount, moveAmount/moveTime));
+    }
+
+    private IEnumerator DashCoroutine(Vector3 dir, float dist, float speed)
+    {
+        float counter = 0f;
+        dir = dir.normalized;
+        _mover.SetRotation(dir);
+        while (counter < dist)
+        {
+            float fixedMoveAmount = speed*Time.fixedDeltaTime;
+            
+            if (counter + fixedMoveAmount >= dist)
+            {
+                fixedMoveAmount -= dist - counter;
+                body.MovePosition(body.position + dir*fixedMoveAmount);
+                yield break;
+            }
+            else
+            {
+                body.MovePosition(body.position + dir*fixedMoveAmount);
+                yield return new WaitForFixedUpdate();
+            }
+            counter += fixedMoveAmount;
+        }
     }
 
     public void OnAttackEnded()

@@ -23,8 +23,8 @@ public class PlayerMover : MonoBehaviour
     public float dashCoolTime = 0.8f;
     private float dashCoolTimer = 0f;
 
-    private Vector3 input = Vector3.zero;
-    private Vector3 lastInput = Vector3.down;
+    public Vector3 input = Vector3.zero;
+    public Vector3 lastInput = Vector3.down;
     private Animator animator;
     private Rigidbody body;
     private PlayerAttacker _attacker;

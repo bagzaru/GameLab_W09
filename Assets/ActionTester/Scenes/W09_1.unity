@@ -1300,5 +1300,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8146033685163141044, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
+      propertyPath: lastInput.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146033685163141044, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
+      propertyPath: lastInput.z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 658b07f81a7d63043ae8d3da51a5a4ce, type: 3}
