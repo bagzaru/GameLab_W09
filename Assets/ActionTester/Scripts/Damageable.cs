@@ -12,16 +12,11 @@ public class Damageable : MonoBehaviour
 	[HideInInspector]public UnityEvent onDamaged;
 	[HideInInspector]public UnityEvent onKilled;
 
-	private void Start()
-	{
-		hp = maxHp;
-	}
-
 	public void Hit(float damage)
 	{
 		hp -= damage;
 		onDamaged.Invoke();
-		Debug.Log($"{gameObject.name}: 데미지 입음");
+		//Debug.Log($"{gameObject.name}: 데미지 입음");
 		if (hp <= 0f)
 		{
 			hp = 0f;
@@ -32,5 +27,6 @@ public class Damageable : MonoBehaviour
 	public void Kill()
 	{
 		onKilled.Invoke();
+		Destroy(gameObject);
 	}
 }

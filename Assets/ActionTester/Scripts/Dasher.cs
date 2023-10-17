@@ -7,13 +7,13 @@ using UnityEngine.Serialization;
 
 public class Dasher : MonoBehaviour
 {
-	public bool IsDashing { get; private set; } = false;
-	public bool CanDash { get; private set; } = true;
+	public bool IsDashing { get; protected set; } = false;
+	public bool CanDash { get; set; } = true;
 	
 	[Header("대쉬 관련 정보")]
 	public float dashTime = 0.2f;
 	public float dashDistance = 10f;
-	private Vector3 direction;
+	public Vector3 direction;
 
 	[Header("선딜레이")]
 	public float dashCastingTime = 0.5f;
@@ -31,9 +31,9 @@ public class Dasher : MonoBehaviour
 	[HideInInspector]public UnityEvent onStun;
 	[HideInInspector]public UnityEvent onFinish;
 
-	private Rigidbody _body;
+	protected Rigidbody _body;
 
-	protected void Start()
+	protected virtual void Start()
 	{
 		_body = GetComponent<Rigidbody>();
 		onFinish.AddListener(OnDashEnd);
@@ -53,7 +53,7 @@ public class Dasher : MonoBehaviour
 		}
 	}
 
-	public void Dash(Vector3 dir)
+	public virtual void Dash(Vector3 dir)
 	{
 		if (isCooldown||!CanDash||IsDashing)
 		{

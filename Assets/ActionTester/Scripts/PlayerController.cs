@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -27,12 +26,23 @@ public class PlayerController : MonoBehaviour
         _mover.onMove.AddListener(()=>{ animator.SetBool(animMoveCode,true);});
         _mover.onMoveEnd.AddListener(()=>{ animator.SetBool(animMoveCode,false);});
     }
-    
 
+    public bool CanSwitch()
+    {
+
+        return !(_dasher != null && _dasher.IsDashing || _attacker != null && _attacker.IsAttacking);
+    }
+
+    public bool isRoll = false;
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (isRoll)
+        {
+            Vector2 ti = context.ReadValue<Vector2>();
+            _dasher.direction=(new Vector3(ti.x, 0f, ti.y));
+        }
         if (_mover == null) return;
-        if (_dasher.IsDashing || _attacker.IsAttacking)
+        if (_dasher!=null&&_dasher.IsDashing || _attacker!=null&&_attacker.IsAttacking)
         {
             //대쉬 중이거나 공격 중이면 움직임 금지
             _mover.StopMove();

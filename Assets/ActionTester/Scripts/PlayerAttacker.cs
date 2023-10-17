@@ -21,7 +21,7 @@ public class PlayerAttacker : MonoBehaviour
     private float _currentDuration = 0f;
 
     //공격 후 딜레이
-    private float _attackDelay = 1.5f;
+    private float _attackDelay = 0.8f;
     private float _currentDelay = 0f;
     
     //이동 거리

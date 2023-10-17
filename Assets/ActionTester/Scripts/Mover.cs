@@ -51,9 +51,10 @@ public class Mover : MonoBehaviour
     {
         if (IsMoving && CanMove)
         {
+            if(direction!=Vector3.zero) lastDirection = direction;
             BeforeMovement();
             _body.MovePosition(_body.position + direction.normalized*(speed*Time.fixedDeltaTime));
-            if (useRotation) SetRotation(lastDirection);
+            if (useRotation) SetRotation(direction);
             AfterMovement();
         }
     }
